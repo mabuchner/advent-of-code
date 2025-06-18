@@ -8,7 +8,7 @@ import (
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Printf("run failed: %s", err.Error())
+		fmt.Printf("run failed: %s\n", err.Error())
 		os.Exit(1)
 	}
 }
