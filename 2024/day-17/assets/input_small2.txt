@@ -1,0 +1,11 @@
+Register A: 2024
+Register B: 0
+Register C: 0
+
+Program: 0,3,5,4,3,0
+
+0:  0,3  adv 3   ; a=a>>3
+2:  5,4  out A&0b111
+4:  3,0  jnz 0   ; a!=0 ? pc=0
+
+solution: a=117440 (0x1CAC0, 0b0'0001'1100'1010'1100'000, 0b000'011'100'101'011'000'000)
