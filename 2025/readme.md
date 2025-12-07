@@ -13,4 +13,17 @@ Use day 1 as a template for a new day
 
 ```sh
 cp -R day-01 day-02 && cd ./day-02 && sed -i '' -e 's/day-01/day-02/g' go.mod
+
+```
+
+When adding a new day, update the 'day' arrays in the
+[2025-ci.yml](../.github/workflows/2025-ci.yml) file for each job.
+
+Example
+
+```yml
+jobs:
+  # ...
+  matrix:
+    day: ['01', '02', '03', '04'] # <--
 ```
