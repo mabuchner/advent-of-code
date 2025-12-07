@@ -1,0 +1,100 @@
+name: 2025 CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '2025/**'
+      - '.github/workflows/2025-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '2025/**'
+      - '.github/workflows/2025-ci.yml'
+
+env:
+  GO_VERSION: '1.24'
+
+# When adding a new day, update the 'day' array in the matrix strategy of each job below
+# Example: day: ['01', '02', '03', '04']
+
+jobs:
+  test:
+    name: Test day-${{ matrix.day }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        day: ['01', '02', '03']
+    defaults:
+      run:
+        working-directory: 2025/day-${{ matrix.day }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: 2025/day-${{ matrix.day }}/go.sum
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: go test -v ./...
+
+  format:
+    name: Check formatting day-${{ matrix.day }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        day: ['01', '02', '03']
+    defaults:
+      run:
+        working-directory: 2025/day-${{ matrix.day }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Check formatting
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "❌ The following files are not formatted:"
+            echo "$unformatted"
+            echo ""
+            echo "Run 'gofmt -w .' to fix formatting."
+            exit 1
+          fi
+          echo "✅ All files are properly formatted"
+
+  lint:
+    name: Lint day-${{ matrix.day }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        day: ['01', '02', '03']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          working-directory: 2025/day-${{ matrix.day }}
+          args: --timeout=5m
