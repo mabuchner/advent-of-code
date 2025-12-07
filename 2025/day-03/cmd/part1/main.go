@@ -11,5 +11,5 @@ func main() {
 		fmt.Printf("run failed: %s\n", err.Error())
 		os.Exit(1)
 	}
-	fmt.Printf("%d", res) // 1120
+	fmt.Printf("%d", res)
 }
