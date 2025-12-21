@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        day: ['01', '02', '03', '04', '05', '06']
+        day: ['01', '02', '03', '04', '05', '06', '07']
     defaults:
       run:
         working-directory: 2025/day-${{ matrix.day }}
@@ -51,7 +51,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        day: ['01', '02', '03', '04', '05', '06']
+        day: ['01', '02', '03', '04', '05', '06', '07']
     defaults:
       run:
         working-directory: 2025/day-${{ matrix.day }}
@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        day: ['01', '02', '03', '04', '05', '06']
+        day: ['01', '02', '03', '04', '05', '06', '07']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
