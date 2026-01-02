@@ -27,3 +27,12 @@ jobs:
   matrix:
     day: ['01', '02', '03', '04'] # <--
 ```
+
+## Notes
+
+### Day 9
+
+The solution for day 9 part 2 contains code to generate a SVG file of the
+input and the result. To enable the SVG generation set the
+`generateSVGEnabled` variable to `true`. The `process` function will then
+create a file called `out.svg`.
